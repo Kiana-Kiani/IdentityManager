@@ -1,3 +1,5 @@
+using IdentityManager.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace IdentityManager
@@ -15,9 +17,14 @@ namespace IdentityManager
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            //ADD DbContext and Identity services
+            //ADD DbContext for using SQL and EFCore
             builder.Services.AddDbContext<Data.AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            //ADD Identity Services
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<Data.AppDbContext>();
 
 
             var app = builder.Build();
@@ -34,6 +41,9 @@ namespace IdentityManager
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //ADD Authentication 
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
