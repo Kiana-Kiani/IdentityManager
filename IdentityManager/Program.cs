@@ -24,7 +24,8 @@ namespace IdentityManager
 
             //ADD Identity Services
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<Data.AppDbContext>();
+                .AddEntityFrameworkStores<Data.AppDbContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
